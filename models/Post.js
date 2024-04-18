@@ -14,21 +14,21 @@ Post.init({
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            len: [1]  // Ensures title is at least 1 character long
+            len: [1] 
         }
     },
     content: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            len: [1]  // Ensures content is at least 1 character long
+            len: [1]  
         }
     },
     user_id: {
         type: DataTypes.INTEGER,
-        allowNull: true,  // Assuming it can be null if the post is not directly associated with a user
+        allowNull: true,  
         references: {
-            model: 'user',  // Links to the User model
+            model: 'user',  
             key: 'id'
         }
     }

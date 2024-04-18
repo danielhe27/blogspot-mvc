@@ -14,14 +14,14 @@ Comment.init({
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            len: [1]  // Ensure the comment is at least 1 character long
+            len: [1]  
         }
     },
     user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'user',  // Reference to the User model
+            model: 'user', 
             key: 'id'
         }
     },
@@ -29,7 +29,7 @@ Comment.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'post',  // Reference to the Post model
+            model: 'post',  
             key: 'id'
         }
     }
