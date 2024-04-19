@@ -1,0 +1,47 @@
+<section class="section">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="/">
+                        <strong>Blogspot MVC</strong>
+                    </a>
+                    <button class="button navbar-burger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+                <div class="navbar-menu">
+                    <div class="navbar-start">
+                        <a class="navbar-item" href="/">Home</a>
+                    </div>
+                    <div class="navbar-end">
+                        {{#if loggedIn}}
+                            <a class="navbar-item" href="/dashboard">Dashboard</a>
+                            <a class="navbar-item" href="/logout">Logout</a>
+                        {{else}}
+                            <a class="navbar-item" href="/login">Login</a>
+                            <a class="navbar-item" href="/signup">Signup</a>
+                        {{/if}}
+                    </div>
+                </div>
+            </nav>
+            <h1 class="title">Welcome to Blogspot MVC</h1>
+            <div class="posts">
+                {{#each posts}}
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title">{{title}}</p>
+                        </header>
+                        <div class="card-content">
+                            <div class="content">
+                                {{content}}
+                                <br>
+                                <time datetime="{{created_at}}">{{formatDate created_at}}</time>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </section>
