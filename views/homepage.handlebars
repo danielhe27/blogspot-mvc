@@ -1,47 +1,51 @@
 <section class="section">
-        <div class="container">
-            <nav class="navbar" role="navigation" aria-label="main navigation">
-                <div class="navbar-brand">
-                    <a class="navbar-item" href="/">
-                        <strong>Blogspot MVC</strong>
-                    </a>
-                    <button class="button navbar-burger">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-                </div>
-                <div class="navbar-menu">
-                    <div class="navbar-start">
-                        <a class="navbar-item" href="/">Home</a>
-                    </div>
-                    <div class="navbar-end">
-                        {{#if loggedIn}}
-                            <a class="navbar-item" href="/dashboard">Dashboard</a>
-                            <a class="navbar-item" href="/logout">Logout</a>
-                        {{else}}
-                            <a class="navbar-item" href="/login">Login</a>
-                            <a class="navbar-item" href="/signup">Signup</a>
-                        {{/if}}
+    <div class="container">
+        <h1 class="title">Welcome to Blogspot MVC</h1>
+        
+        <!-- New Form for Submitting Posts -->
+        <div class="box">
+            <form id="new-post-form">
+                <div class="field">
+                    <label class="label" for="postTitle">Title</label>
+                    <div class="control">
+                        <input class="input" type="text" id="postTitle" name="title" placeholder="Enter post title" required>
                     </div>
                 </div>
-            </nav>
-            <h1 class="title">Welcome to Blogspot MVC</h1>
-            <div class="posts">
-                {{#each posts}}
-                    <div class="card">
-                        <header class="card-header">
-                            <p class="card-header-title">{{title}}</p>
-                        </header>
-                        <div class="card-content">
-                            <div class="content">
-                                {{content}}
-                                <br>
-                                <time datetime="{{created_at}}">{{formatDate created_at}}</time>
-                            </div>
-                        </div>
+                <div class="field">
+                    <label class="label" for="postContent">Content</label>
+                    <div class="control">
+                        <textarea class="textarea" id="postContent" name="content" placeholder="Enter post content" required></textarea>
                     </div>
-                {{/each}}
-            </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button type="submit" class="button is-link">Submit Post</button>
+                    </div>
+                </div>
+            </form>
         </div>
-    </section>
+
+        <!-- Existing Posts Display -->
+        <div class="posts">
+            {{#each posts}}
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">{{title}}</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        {{content}}
+                        <br>
+                        <p>Created by: {{user.username}}</p> 
+                        <form id="delete-post-form-{{id}}" class="delete-post-form" action="/api/posts/{{id}}" method="DELETE"> 
+    <input type="hidden" name="_method" value="DELETE">
+    <button type="submit" class="button is-danger delete-post-button">Delete</button>
+</form>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</section>
+<script src="/js/remove-post.js"></script>
