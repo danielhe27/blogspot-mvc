@@ -1,0 +1,36 @@
+<section class="section">
+    <div class="container">
+        <h1 class="title">Dashboard</h1>
+    </div>
+</section>
+
+<!-- Posts -->
+<section class="section">
+    <div class="container">
+        {{#each posts}}
+        <div class="box post">
+            <h2 class="title is-4">{{title}}</h2>
+            <p>{{content}}</p>
+            <p class="subtitle is-6">Created by: {{user.username}}</p>
+            <!-- Comment Form -->
+            <form action="/api/comments/{{id}}" method="POST" class="comment-form" style="display: none;">
+                <div class="field">
+                    <div class="control">
+                        <textarea class="textarea" name="comment_text" placeholder="Add a comment"></textarea>
+                    </div>
+                </div>
+            </form>
+            <!-- Add Comment Button -->
+            <button class="button add-comment-btn">Add Comment</button>
+            <!-- Delete Button -->
+            <form action="/api/posts/{{id}}" method="DELETE">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" class="button is-danger">Delete</button>
+            </form>
+        </div>
+        {{/each}}
+    </div>
+</section>
+<!-- JavaScript for removing posts -->
+<script src="/js/remove-post.js"></script>
+<script src="/js/add-comment.js"></script>

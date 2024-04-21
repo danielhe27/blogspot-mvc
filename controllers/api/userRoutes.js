@@ -1,99 +1,59 @@
 const router = require('express').Router();
 const { User, Post, Comment } = require('../../models');
+const express = require('express');
 
-// Get all users (excluding password)
-router.get('/', (req, res) => {
-    User.findAll({
-        attributes: { exclude: ['password'] }
-    })
-    .then(dbUserData => res.json(dbUserData))
-    .catch(err => {
-        console.error("Error fetching users:", err);
-        res.status(500).json({ message: "Internal server error" });
-    });
-});
 
-// Get a specific user (excluding password)
-router.get('/:id', (req, res) => {
-    User.findOne({
-        attributes: { exclude: ['password'] },
-        where: { id: req.params.id },
-        include: [
-            {
-                model: Post,
-                attributes: ['id', 'title', 'content', 'created_at']
-            },
-            {
-                model: Comment,
-                attributes: ['id', 'comment_text', 'created_at'],
-                include: { model: Post, attributes: ['title'] }
-            }
-        ]
-    })
-    .then(dbUserData => {
-        if (!dbUserData) {
-            return res.status(404).json({ message: 'No user found with this id' });
-        }
-        res.json(dbUserData);
-    })
-    .catch(err => {
-        console.error("Error finding user:", err);
-        res.status(500).json({ message: "Internal server error" });
-    });
-});
 
 // Create a new user
-router.post('/', (req, res) => {
-    User.create({
-        username: req.body.username,
-        password: req.body.password
-    })
-    .then(dbUserData => {
+router.post('/', async (req, res) => {
+    try {
+        const newUser = await User.create(req.body);
         req.session.save(() => {
-            req.session.user_id = dbUserData.id;
-            req.session.username = dbUserData.username;
+            req.session.user_id = newUser.id;  
+            req.session.username = newUser.username; 
             req.session.loggedIn = true;
-            res.json(dbUserData);
+            res.redirect('/');
         });
-    })
-    .catch(err => {
+    } catch(err) {
         console.error("Error creating user:", err);
         res.status(500).json({ message: "Failed to create user" });
-    });
+    }
 });
 
 // User login
 router.post('/login', async (req, res) => {
     try {
         const dbUserData = await User.findOne({ where: { username: req.body.username } });
-        if (!dbUserData) {
-            return res.status(400).json({ message: 'No user with that username' });
+        if (!dbUserData || !(await dbUserData.checkPassword(req.body.password))) {
+            return res.status(400).json({ message: 'Incorrect username or password' });
         }
-        const validPassword = await dbUserData.checkPassword(req.body.password);
-        if (!validPassword) {
-            return res.status(400).json({ message: 'Incorrect password' });
-        }
+        
         req.session.save(() => {
             req.session.user_id = dbUserData.id;
             req.session.username = dbUserData.username;
             req.session.loggedIn = true;
-            res.json({ user: dbUserData, message: 'You are now logged in' });
+
+            res.json({ user: dbUserData, message: 'You are now logged in!' });
         });
     } catch (err) {
-        console.error("Error logging in:", err);
-        res.status(500).json({ message: "Internal server error" });
+        console.error("Login error:", err);
+        res.status(500).json({ message: "Error logging in" });
     }
 });
 
 // User logout
 router.post('/logout', (req, res) => {
-    if (req.session.loggedIn) {
-        req.session.destroy(() => {
-            res.status(204).end();
-        });
-    } else {
-        res.status(404).end();
-    }
+    req.session.destroy(err => {
+        if (err) {
+            // Handle error case, e.g., unable to destroy the session
+            return res.status(500).json({ message: 'Failed to log out' });
+        }
+        res.clearCookie('connect.sid');  // Assuming you're using express-session
+        res.status(204).send();
+    });
 });
+
+
+
 
 module.exports = router;
