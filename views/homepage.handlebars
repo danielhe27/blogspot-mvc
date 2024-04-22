@@ -39,7 +39,7 @@
                         <p>Created by: {{user.username}}</p> 
                         <form id="delete-post-form-{{id}}" class="delete-post-form" action="/api/posts/{{id}}" method="DELETE"> 
     <input type="hidden" name="_method" value="DELETE">
-    <button type="submit" class="button is-danger delete-post-button">Delete</button>
+    <button type="button" class="button is-danger delete-btn" data-post-id="{{id}}">Delete</button>
 </form>
                     </div>
                 </div>

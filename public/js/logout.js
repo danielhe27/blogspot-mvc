@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
           })
           .then(response => {
               if (response.ok) {
-                  window.location.href = '/homepage'; // Redirect the user to the homepage
+                  window.location.href = '/'; 
               } else {
                   alert('Failed to log out.');
               }

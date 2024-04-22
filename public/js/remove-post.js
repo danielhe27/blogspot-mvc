@@ -1,33 +1,39 @@
-console.log("post.js connected");
+document.addEventListener("DOMContentLoaded", () => {
+    const deleteButtons = document.querySelectorAll('.delete-btn');
 
-// Function to handle post deletion
-const deletePost = async (postId, postElement) => {
-    try {
-        const response = await fetch(`/api/posts/${postId}`, {
-            method: "DELETE", // Ensure that the request method is set to DELETE
-            headers: {
-                "Content-Type": "application/json"
-            }
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const postId = this.dataset.postId;
+            if (!confirm("Are you sure you want to delete this post?")) return;
+
+            fetch(`/api/posts/${postId}`, {
+                method: 'DELETE', 
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include' 
+            })
+            .then(response => {
+                if (!response.ok) {
+                    // Handle non-200 responses
+                    return response.json().then(data => {
+
+                        throw new Error(data.message || "Failed to delete the post");
+                    }).catch(() => {
+
+                        throw new Error("Failed to delete the post with no detailed server message");
+                    });
+                }
+                return response.json(); 
+            })
+            .then(data => {
+                alert(data.message); 
+                document.querySelector(`.post[data-post-id="${postId}"]`).remove(); 
+            })
+            .catch(error => {
+                console.error('Error deleting post:', error);
+                alert('Error occurred while trying to delete the post: ' + error.message);
+            });
         });
-
-        if (response.ok) {
-            postElement.remove(); // Remove the post element from the DOM
-        } else {
-            console.error("Failed to delete post");
-        }
-    } catch (error) {
-        console.error("Error deleting post:", error.message);
-    }
-};
-
-// Get all post elements
-const postElements = document.querySelectorAll(".post");
-
-postElements.forEach(postElement => {
-    postElement.addEventListener("click", async (event) => {
-        if (event.target.classList.contains("delete-btn")) {
-            const postId = event.target.dataset.postId; 
-            deletePost(postId, postElement);
-        }
     });
 });
