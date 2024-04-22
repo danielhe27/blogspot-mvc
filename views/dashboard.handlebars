@@ -8,7 +8,7 @@
 <section class="section">
     <div class="container">
         {{#each posts}}
-        <div class="box post">
+        <div class="box post" data-post-id="{{id}}">
             <h2 class="title is-4">{{title}}</h2>
             <p>{{content}}</p>
             <p class="subtitle is-6">Created by: {{user.username}}</p>
@@ -23,14 +23,12 @@
             <!-- Add Comment Button -->
             <button class="button add-comment-btn">Add Comment</button>
             <!-- Delete Button -->
-            <form action="/api/posts/{{id}}" method="DELETE">
-                <input type="hidden" name="_method" value="DELETE">
-                <button type="submit" class="button is-danger">Delete</button>
-            </form>
+            <button type="button" class="button is-danger delete-btn" data-post-id="{{id}}">Delete</button>
         </div>
         {{/each}}
     </div>
 </section>
-<!-- JavaScript for removing posts -->
+
+<!-- JavaScript for removing posts and adding comments -->
 <script src="/js/remove-post.js"></script>
 <script src="/js/add-comment.js"></script>

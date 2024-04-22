@@ -93,26 +93,42 @@ router.put("/:id", withAuth, async (req, res) => {
 });
 
 // Delete a post by ID
-router.delete("/:id", withAuth, async (req, res) => {
+router.delete('/:id', withAuth, async (req, res) => {
     try {
         const { user_id } = req.session;
 
-        const result = await Post.destroy({
+        const post = await Post.findOne({
             where: {
-                id: req.params.id,
-                user_id,
+                id: req.params.id
             }
         });
 
-        if (!result) {
+        if (!post) {
             return res.status(404).json({ message: "No post found with this id" });
         }
 
-        res.json({ message: "Post deleted successfully" });
-    } catch (err) {
-        console.error("Error deleting post:", err);
-        res.status(500).json({ message: "Failed to delete post", error: err.message });
+        if (user_id === post.user_id || req.session.isAdmin) {
+            // User has permission to delete the post
+            const result = await Post.destroy({
+                where: {
+                    id: req.params.id
+                }
+            });
+
+            if (!result) {
+                return res.status(404).json({ message: "Failed to delete post" });
+            }
+
+            res.json({ message: "Post deleted successfully" });
+        } else {
+            // User does not have permission to delete the post
+            return res.status(403).json({ message: "Unauthorized to delete this post" });
+        }
+    } catch (error) {
+        console.error('Error deleting post:', error);
+        res.status(500).json({ message: "Failed to delete post", error: error.message });
     }
 });
+
 
 module.exports = router;
