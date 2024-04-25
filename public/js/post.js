@@ -24,4 +24,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     document.getElementById('new-post-form').addEventListener('submit', newFormHandler);
+
     });

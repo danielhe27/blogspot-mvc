@@ -79,13 +79,16 @@ router.put("/:id", withAuth, async (req, res) => {
             return res.status(400).json({ message: "Title and content are required" });
         }
 
-        const result = await Post.update({ title, content }, { where: { id: req.params.id } });
+        const [numUpdatedRows, updatedPosts] = await Post.update(
+            { title, content },
+            { where: { id: req.params.id } }
+        );
 
-        if (!result[0]) {
+        if (numUpdatedRows === 0) {
             return res.status(404).json({ message: "No post found with this id" });
         }
 
-        res.json({ message: "Post updated successfully" });
+        res.json({ message: "Post updated successfully", updatedPosts });
     } catch (err) {
         console.error("Error updating post:", err);
         res.status(500).json({ message: "Failed to update post", error: err.message });

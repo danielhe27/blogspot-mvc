@@ -48,10 +48,11 @@ router.post('/logout', (req, res) => {
             // Handle error case, e.g., unable to destroy the session
             return res.status(500).json({ message: 'Failed to log out' });
         }
-        res.clearCookie('connect.sid');  // Assuming you're using express-session
-        res.status(204).send();
+        res.clearCookie('connect.sid');  // Clear the session cookie
+        res.redirect('/');  // Redirect to the home page
     });
 });
+
 
 
 
