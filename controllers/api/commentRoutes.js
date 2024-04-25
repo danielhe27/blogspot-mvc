@@ -12,24 +12,26 @@ router.get("/", (req, res) => {
   });
   
   
-  router.post('/:id', withAuth, (req, res) => {
-    const { comment_text, post_id } = req.body;
-    const user_id = req.session.user_id;
-  
-    if (!comment_text || !post_id) {
-        return res.status(400).json({ error: 'Comment text and post ID are required' });
-    }
-  
-    Comment.create({
-        comment_text,
-        post_id,
-        user_id
-    })
-    .then(dbCommentData => res.json(dbCommentData))
-    .catch(err => {
-        console.error("Error creating comment:", err);
+  router.post('/:id', withAuth, async (req, res) => {
+    try {
+        const { comment_text, post_id } = req.body;
+        if (!comment_text) {
+            return res.status(400).json({ error: 'Comment text is required' });
+        }
+
+        const newComment = await Comment.create({
+            comment_text,
+            post_id,
+            user_id: req.session.user_id
+
+        });
+
+        // Send a success response with the new comment data
+        res.status(201).json(newComment);
+    } catch (err) {
+        console.error('Error creating comment:', err);
         res.status(500).json({ error: 'Failed to create comment' });
-    });
-  });
-  
+    }
+});
+
 module.exports = router;

@@ -22,13 +22,48 @@
             </form>
             <!-- Add Comment Button -->
             <button class="button add-comment-btn">Add Comment</button>
+            <!-- Update Button -->
+            <button type="button" class="button is-info update-btn" data-post-id="{{id}}">Update</button>
             <!-- Delete Button -->
             <button type="button" class="button is-danger delete-btn" data-post-id="{{id}}">Delete</button>
+            <!-- Display Comments Section -->
+            <div class="comments-section">
+                <h3 class="subtitle is-5">Comments</h3>
+                {{#each comments}}
+                <div class="box comment">
+                    <p>{{comment_text}}</p>
+                    <p>Posted by: {{user.username}}</p>
+                </div>
+                {{/each}}
+            </div>
+            
+ <div class="update-form" style="display: none;">
+                <form id="update-post-form-{{id}}" action="/api/posts/{{id}}" method="PUT">
+                    <div class="field">
+                        <label class="label" for="updatePostTitle">Title</label>
+                        <div class="control">
+                            <input class="input" type="text" id="updatePostTitle" name="title" value="{{title}}" placeholder="Enter post title" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label" for="updatePostContent">Content</label>
+                        <div class="control">
+                            <textarea class="textarea" id="updatePostContent" name="content" placeholder="Enter post content" required>{{content}}</textarea>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button type="submit" class="button is-link">Update Post</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
         {{/each}}
     </div>
 </section>
 
-<!-- JavaScript for removing posts and adding comments -->
+<!-- JavaScript for removing posts, adding comments, and updating posts -->
 <script src="/js/remove-post.js"></script>
 <script src="/js/add-comment.js"></script>
+<script src="/js/update-post.js"></script>

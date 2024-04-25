@@ -1,7 +1,7 @@
 <section class="section">
     <div class="container">
         <h1 class="title">Welcome to Blogspot MVC</h1>
-        
+        {{#if loggedIn}}
         <!-- New Form for Submitting Posts -->
         <div class="box">
             <form id="new-post-form">
@@ -24,7 +24,7 @@
                 </div>
             </form>
         </div>
-
+        {{/if}}
         <!-- Existing Posts Display -->
         <div class="posts">
             {{#each posts}}
@@ -36,11 +36,30 @@
                     <div class="content">
                         {{content}}
                         <br>
-                        <p>Created by: {{user.username}}</p> 
-                        <form id="delete-post-form-{{id}}" class="delete-post-form" action="/api/posts/{{id}}" method="DELETE"> 
-    <input type="hidden" name="_method" value="DELETE">
-    <button type="button" class="button is-danger delete-btn" data-post-id="{{id}}">Delete</button>
-</form>
+                        <p>Created by: {{user.username}}</p>
+                        <p>Created at: {{formatDate createdAt}}</p>
+                        <button type="button" class="button is-info update-btn" data-post-id="{{id}}">Update</button>
+                        <div class="update-form" style="display: none;">
+                            <form id="update-post-form-{{id}}" action="/api/posts/{{id}}" method="PUT">
+                                <div class="field">
+                                    <label class="label" for="updatePostTitle">Title</label>
+                                    <div class="control">
+                                        <input class="input" type="text" id="updatePostTitle" name="title" value="{{title}}" placeholder="Enter post title" required>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label" for="updatePostContent">Content</label>
+                                    <div class="control">
+                                        <textarea class="textarea" id="updatePostContent" name="content" placeholder="Enter post content" required>{{content}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <button type="submit" class="button is-link">Update Post</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -48,4 +67,6 @@
         </div>
     </div>
 </section>
-<script src="/js/remove-post.js"></script>
+
+<script src="/js/add-comment.js"></script>
+<script src="/js/update-post.js"></script>
