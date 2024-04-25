@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ comment_text: commentText, post_id: postId }) // Make sure post_id is included here
+          body: JSON.stringify({ comment_text: commentText, post_id: postId }) 
         });
 
         if (!response.ok) {
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
 comment
       } catch (error) {
         console.error('Error adding comment:', error);
-        // Handle error appropriately, e.g., show error message to the user
+       
       }
     });
   });

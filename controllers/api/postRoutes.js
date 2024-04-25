@@ -71,7 +71,7 @@ router.post("/", async (req, res) => {
 
 
 // Update a post by ID
-router.put("/:id", withAuth, async (req, res) => {
+router.put("/:id", async (req, res) => {
     try {
         const { title, content } = req.body;
 
