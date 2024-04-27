@@ -1,3 +1,32 @@
 @import "https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css";
 
 
+.card {
+  background-color: #3f7b47;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(246, 244, 244, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
+}
+
+.card-created-at {
+  color: #f6f4f4;
+  margin:auto;
+}
+
+.footer-card {
+  color: black;
+  font-size: larger;
+  font-style: oblique;
+  border-top-style: inset;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.footer {
+  margin-top: auto; 
+}

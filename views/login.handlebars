@@ -1,32 +1,35 @@
 <section class="section">
-        <div class="container">
-            <div class="columns is-centered">
-                <div class="column is-5">
-                    <h1 class="title has-text-centered">Login</h1>
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-5">
+                <div class="box" style="border: 2px solid white; padding: 20px;">
+                    <h1 class="title has-text-centered has-text-white">Login</h1>
                     <form action="/login" method="POST">
-    <div class="field">
-        <label class="label">Username</label>
-        <div class="control">
-            <input class="input" type="text" id="username-login" name="username" placeholder="Your username" required>
-        </div>
-    </div>
-    <div class="field">
-        <label class="label">Password</label>
-        <div class="control">
-            <input class="input" type="password" id="password-login" name="password" placeholder="Your password" required>
-        </div>
-    </div>
                         <div class="field">
+                            <label class="label has-text-white">Username</label>
                             <div class="control">
+                                <input class="input" type="text" id="username-login" name="username" placeholder="Your username" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label has-text-white">Password</label>
+                            <div class="control">
+                                <input class="input" type="password" id="password-login" name="password" placeholder="Your password" required>
+                            </div>
+                        </div>
+                        <div class="field ">
+                            <div class="control has-text-centered">
                                 <button class="button is-link" type="submit">Login</button>
                             </div>
                         </div>
-                        <p class="has-text-centered">
-                            Don't have an account? <a href="/signup">Sign up</a>
+                        <p class="has-text-centered has-text-white">
+                            Don't have an account? <a href="/signup" class="has-text-blue">Sign up</a>
                         </p>
                     </form>
                 </div>
             </div>
         </div>
-    </section>
-    <script src="/js/login.js"></script>
+    </div>
+</section>
+
+<script src="/js/login.js"></script>

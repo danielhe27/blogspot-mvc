@@ -30,36 +30,31 @@
             {{#each posts}}
             <div class="card">
                 <header class="card-header">
-                    <p class="card-header-title">{{title}}</p>
-                </header>
+             <p class="card-header-title">{{title}}</p>
+             <p class="card-created-at">created at {{format_date created_at}}</p>
+            </header>
                 <div class="card-content">
                     <div class="content">
                         {{content}}
                         <br>
-                        <p>Created by: {{user.username}}</p>
-                        <p>Created at: {{formatDate createdAt}}</p>
-                        <button type="button" class="button is-info update-btn" data-post-id="{{id}}">Update</button>
-                        <div class="update-form" style="display: none;">
-                            <form id="update-post-form-{{id}}" action="/api/posts/{{id}}" method="PUT">
-                                <div class="field">
-                                    <label class="label" for="updatePostTitle">Title</label>
-                                    <div class="control">
-                                        <input class="input" type="text" id="updatePostTitle" name="title" value="{{title}}" placeholder="Enter post title" required>
-                                    </div>
+                        <footer class="footer-card"> by: {{user.username}}</footer>
+
+
+
+                        <!-- Add Comment Form -->
+                        <form class="comment-form" style="display: none;">
+                            <div class="field">
+                                <label class="label">Add a Comment</label>
+                                <div class="control">
+                                    <textarea class="textarea" placeholder="Enter your comment"></textarea>
                                 </div>
-                                <div class="field">
-                                    <label class="label" for="updatePostContent">Content</label>
-                                    <div class="control">
-                                        <textarea class="textarea" id="updatePostContent" name="content" placeholder="Enter post content" required>{{content}}</textarea>
-                                    </div>
+                            </div>
+                            <div class="field">
+                                <div class="control">
+                                    <button type="button" class="button is-link add-comment-btn" data-post-id="{{id}}">Add Comment</button>
                                 </div>
-                                <div class="field">
-                                    <div class="control">
-                                        <button type="submit" class="button is-link">Update Post</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -70,3 +65,4 @@
 
 <script src="/js/add-comment.js"></script>
 <script src="/js/update-post.js"></script>
+<script src="/utils/helpers.js"></script>
