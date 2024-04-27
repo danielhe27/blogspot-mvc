@@ -18,11 +18,8 @@ Post.init({
         }
     },
     content: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            len: [1]  
-        }
+        type: DataTypes.TEXT,
+        allowNull: false
     },
     user_id: {
         type: DataTypes.INTEGER,
@@ -31,6 +28,11 @@ Post.init({
             model: 'user',  
             key: 'id'
         }
+    },
+    created_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW
     }
 }, {
     sequelize,
