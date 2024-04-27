@@ -34,3 +34,10 @@ body {
 .box {
   background-color: #555c56;
 }
+
+
+a.navbar-item {
+  background-color: hsla(221, 14%,calc(9% + 0%), 0);
+  cursor: pointer;
+  text-align-last: center;
+}
