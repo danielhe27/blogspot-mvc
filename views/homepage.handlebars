@@ -30,16 +30,14 @@
             {{#each posts}}
             <div class="card">
                 <header class="card-header">
-             <p class="card-header-title">{{title}}</p>
-             <p class="card-created-at">created at {{format_date created_at}}</p>
-            </header>
+                    <p class="card-header-title">{{title}}</p>
+                    <p class="card-created-at">Created at: {{format_date created_at}}</p>
+                </header>
                 <div class="card-content">
                     <div class="content">
                         {{content}}
                         <br>
-                        <footer class="footer-card"> by: {{user.username}}</footer>
-
-
+                        <footer class="footer-card">By: {{user.username}}</footer>
 
                         <!-- Add Comment Form -->
                         <form class="comment-form" style="display: none;">
